@@ -3,3 +3,6 @@
 *.zip
 *.log
 xbmc-live
+fastinit
+shairport
+xbmc-remote-php

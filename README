@@ -3,6 +3,29 @@ Usage: sudo ./build-xbmcfreak.sh
 
 ====================================================================
 
+The asoundrc file is generated from this script:
+https://github.com/xbmc/xbmc-live/raw/master/live.d/04-configNVIDIAasoundrc.sh
+
+If you like to default to hdmi overwrite the asoundrc script using the following:
+
+pcm.!default {
+type plug
+slave {
+pcm .hdmi.
+}
+}
+
+====================================================================
+
+5 may 2011
+
+- inital natty support
+- guest account entered in smb.conf is now changed upon the user entered during install.
+- inherit permissions added to all samba shares (smb.conf).
+- chown added for all user created directories within the xbmc users home dir.
+- sabnzbd 6.0 added, repo jcfp-ppa added
+- fixed build.sh
+
 1 apr 2011
 
 - total revamp , thanks to luigi

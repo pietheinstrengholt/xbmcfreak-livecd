@@ -37,6 +37,7 @@ echo "libid3tag0 mt-daapd" >> $WORKDIR/buildLive/Files/chroot_local-packageslist
 echo "python-software-properties" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "locate ethtool" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "nfs-common" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+echo "uxlaunch" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 
 #new build.sh script
@@ -55,6 +56,57 @@ cp files/buildHook-*.sh $WORKDIR/ -Rf
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/00-installCrystalHD
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/99-checkKernels
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/13-setTvheadend
+
+cd $THISDIR
+
+#check if xbmc-live dir already exists
+if [ -d "xbmc-remote-php" ]; then
+    echo "xbmc-remote-php dir already exists"
+    rm -rf xbmc-remote-php
+fi
+
+#clone xbmc-remote-php
+git clone git@github.com:xbmcfreak/xbmc-remote-php.git
+
+#copy xbmc-remote-php dir
+mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/
+mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/www/
+mv xbmc-php-remote $WORKDIR/buildLive/Files/chroot_local-includes/var/www/ -Rf
+
+#check if fastinit dir already exists
+if [ -d "fastinit" ]; then
+    echo "fastinit dir already exists"
+    rm -rf fastinit
+fi
+
+#clone fast-init
+git clone git://gitorious.org/meego-os-base/fastinit.git
+
+#copy fastinit
+cd fastinit/
+sed -i "s/ROOT ?= \//ROOT ?= \/$WORKDIR\/buildLive\/Files\/chroot_local-includes\//g" Makefile
+make
+make install
+cd $THISDIR
+
+#check if shairport dir already exists
+if [ -d "shairport" ]; then
+    echo "shairport dir already exists"
+    rm -rf shairport
+fi
+
+#clone shairport
+git clone https://github.com/albertz/shairport.git
+
+#install shairport
+cd shairport/
+mkdir $WORKDIR/buildLive/Files/chroot_local-includes/usr/
+mkdir $WORKDIR/buildLive/Files/chroot_local-includes/usr/local/
+mkdir $WORKDIR/buildLive/Files/chroot_local-includes/usr/local/bin/
+sed -i "s/prefix=\/usr\/local/prefix=$WORKDIR\/buildLive\/Files\/chroot_local-includes\/usr\/local/g" Makefile
+make
+make install
+cd $THISDIR
 
 #start building
 cd $WORKDIR
