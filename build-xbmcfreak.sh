@@ -27,7 +27,7 @@ fi
 
 #add additional packages
 echo "samba" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-echo "proftpd" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+echo "proftpd-basic" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "wget lynx lftp ftp zip" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "sabnzbdplus sabnzbdplus-theme-mobile" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "lm-sensors" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
@@ -37,8 +37,8 @@ echo "libid3tag0 mt-daapd" >> $WORKDIR/buildLive/Files/chroot_local-packageslist
 echo "python-software-properties" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "locate ethtool" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "nfs-common" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-echo "uxlaunch" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+#sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 
 #new build.sh script
 cp files/build.sh $WORKDIR/ -Rf
@@ -69,44 +69,9 @@ fi
 git clone git@github.com:xbmcfreak/xbmc-remote-php.git
 
 #copy xbmc-remote-php dir
-mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/
-mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/www/
-mv xbmc-php-remote $WORKDIR/buildLive/Files/chroot_local-includes/var/www/ -Rf
-
-#check if fastinit dir already exists
-if [ -d "fastinit" ]; then
-    echo "fastinit dir already exists"
-    rm -rf fastinit
-fi
-
-#clone fast-init
-git clone git://gitorious.org/meego-os-base/fastinit.git
-
-#copy fastinit
-cd fastinit/
-sed -i "s/ROOT ?= \//ROOT ?= \/$WORKDIR\/buildLive\/Files\/chroot_local-includes\//g" Makefile
-make
-make install
-cd $THISDIR
-
-#check if shairport dir already exists
-if [ -d "shairport" ]; then
-    echo "shairport dir already exists"
-    rm -rf shairport
-fi
-
-#clone shairport
-git clone https://github.com/albertz/shairport.git
-
-#install shairport
-cd shairport/
-mkdir $WORKDIR/buildLive/Files/chroot_local-includes/usr/
-mkdir $WORKDIR/buildLive/Files/chroot_local-includes/usr/local/
-mkdir $WORKDIR/buildLive/Files/chroot_local-includes/usr/local/bin/
-sed -i "s/prefix=\/usr\/local/prefix=$WORKDIR\/buildLive\/Files\/chroot_local-includes\/usr\/local/g" Makefile
-make
-make install
-cd $THISDIR
+#mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/
+#mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/www/
+mv xbmc-remote-php/ $WORKDIR/buildLive/Files/chroot_local-includes/var/www
 
 #start building
 cd $WORKDIR
