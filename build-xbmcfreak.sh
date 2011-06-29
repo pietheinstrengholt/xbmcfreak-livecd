@@ -38,7 +38,8 @@ echo "python-software-properties" >> $WORKDIR/buildLive/Files/chroot_local-packa
 echo "locate ethtool" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "nfs-common" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 #sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+#sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+sed -i "s/uxlaunch//g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 
 #new build.sh script
 cp files/build.sh $WORKDIR/ -Rf
@@ -47,6 +48,7 @@ cp files/build.sh $WORKDIR/ -Rf
 cp files/chroot_local-includes/* $WORKDIR/buildLive/Files/chroot_local-includes/ -Rf
 
 #add addtional sources
+rm $WORKDIR/buildLive/Files/chroot_sources/xbmc* -rf
 cp files/chroot_sources/* $WORKDIR/buildLive/Files/chroot_sources/ -Rf
 
 #add hooks
