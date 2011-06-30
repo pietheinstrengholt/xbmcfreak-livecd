@@ -46,6 +46,9 @@ cp files/build.sh $WORKDIR/ -Rf
 
 #add additional files
 cp files/chroot_local-includes/* $WORKDIR/buildLive/Files/chroot_local-includes/ -Rf
+cp files/binary_grub/* $WORKDIR/buildLive/Files/binary_grub/ -Rf
+cp files/finish-install.d/* $WORKDIR/buildDEBs/xbmclive-installhelpers/finish-install.d/ -Rf
+cp files/post-base-installer.d/* buildDEBs/xbmclive-installhelpers/post-base-installer.d/ -Rf
 
 #add addtional sources
 rm $WORKDIR/buildLive/Files/chroot_sources/xbmc* -rf
@@ -58,6 +61,8 @@ cp files/buildHook-*.sh $WORKDIR/ -Rf
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/00-installCrystalHD
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/99-checkKernels
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/13-setTvheadend
+rm $WORKDIR/buildLive/Files/binary_local-includes/install/Hooks/setup_uxlaunch.sh
+rm $WORKDIR/buildLive/Files/chroot_local-hooks/20-uxlaunchConfig
 
 cd $THISDIR
 
