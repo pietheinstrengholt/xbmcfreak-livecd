@@ -185,4 +185,7 @@ fi
 #set XBMCLive hostname
 hostname $VHOSTNAME
 
+#start shairpoint
+/usr/local/bin/shairport -d
+
 exit 0

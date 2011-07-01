@@ -40,6 +40,8 @@ echo "nfs-common" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/package
 #sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 #sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 sed -i "s/uxlaunch//g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+echo "libao-dev avahi-utils" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+
 
 #new build.sh script
 cp files/build.sh $WORKDIR/ -Rf

@@ -30,6 +30,5 @@ alsactl store &> /dev/null
 echo none +lirc > /sys/class/rc/rc0/protocols
 
 #shairport deamon
-/usr/local/bin/shairport -d
 
 exit 0
