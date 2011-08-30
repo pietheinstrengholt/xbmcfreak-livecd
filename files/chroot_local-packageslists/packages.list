@@ -7,7 +7,7 @@ alsa-utils hal lirc pm-utils psmisc
 fakeroot
 grub-pc
 xorg xinit fluxbox uxlaunch
-mesa-utils
+mesa-utils libgl1-mesa-dri libgl1-mesa-glx
 genext2fs
 cpufrequtils
 hts-tvheadend
@@ -25,7 +25,7 @@ python-apt
 xbmc-live
 xbmc
 plymouth-theme-xbmc-logo
-fglrx fglrx-amdcccle
+#fglrx fglrx-amdcccle
 nvidia-current libvdpau1
 wpasupplicant wireless-tools
 avahi-daemon

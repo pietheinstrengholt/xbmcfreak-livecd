@@ -2,7 +2,7 @@
 
 # Make sure only root can run our script
 if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root" 1>&2
+echo "This script must be run as root" 1>&2
     exit 1
 fi
 
@@ -12,16 +12,16 @@ WORKDIR=xbmc-live/SDK
 
 #check if xbmc-live dir already exists
 if [ -d "xbmc-live" ]; then
-    echo "xbmc-live dir already exists"
+echo "xbmc-live dir already exists"
     rm -rf xbmc-live
 fi
 
 #clone xbmc-live from xbmc.org
 if [ "$1" == maverick ]; then
-     echo "clone xbmc-live maverick"
+echo "clone xbmc-live maverick"
      git clone -b maverick git@github.com:xbmc/xbmc-live.git
 else
-     echo "clone xbmc-live master"
+echo "clone xbmc-live master"
      git clone git@github.com:xbmc/xbmc-live.git
 fi
 
@@ -37,12 +37,11 @@ echo "libid3tag0 mt-daapd" >> $WORKDIR/buildLive/Files/chroot_local-packageslist
 echo "python-software-properties" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "locate ethtool" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "nfs-common" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-#sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-#sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-sed -i "s/uxlaunch//g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+#sed -i "s/uxlaunch//g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "libao-dev avahi-utils" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "upower acpi-support" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-
 
 #new build.sh script
 cp files/build.sh $WORKDIR/ -Rf
@@ -51,7 +50,8 @@ cp files/build.sh $WORKDIR/ -Rf
 cp files/chroot_local-includes/* $WORKDIR/buildLive/Files/chroot_local-includes/ -Rf
 cp files/binary_grub/* $WORKDIR/buildLive/Files/binary_grub/ -Rf
 cp files/finish-install.d/* $WORKDIR/buildDEBs/xbmclive-installhelpers/finish-install.d/ -Rf
-cp files/post-base-installer.d/* buildDEBs/xbmclive-installhelpers/post-base-installer.d/ -Rf
+cp files/post-base-installer.d/* $WORKDIR/buildDEBs/xbmclive-installhelpers/post-base-installer.d/ -Rf
+cp files/chroot_local-packages $WORKDIR/buildLive/Files/ -Rf
 
 #add addtional sources
 rm $WORKDIR/buildLive/Files/chroot_sources/xbmc* -rf
@@ -71,7 +71,7 @@ cd $THISDIR
 
 #check if xbmc-live dir already exists
 if [ -d "xbmc-remote-php" ]; then
-    echo "xbmc-remote-php dir already exists"
+echo "xbmc-remote-php dir already exists"
     rm -rf xbmc-remote-php
 fi
 
@@ -90,7 +90,6 @@ cd $WORKDIR
 #copy binary files
 cd $THISDIR
 if [ -f $WORKDIR/binary.iso ]; then
-        mv $WORKDIR/binary.* .
+mv $WORKDIR/binary.* .
         chmod 777 binary.*
 fi
-
