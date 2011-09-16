@@ -42,6 +42,7 @@ sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_
 #sed -i "s/uxlaunch//g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "libao-dev avahi-utils" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "upower acpi-support" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+echo "libmad0" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 
 #new build.sh script
 cp files/build.sh $WORKDIR/ -Rf
@@ -64,8 +65,8 @@ cp files/buildHook-*.sh $WORKDIR/ -Rf
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/00-installCrystalHD
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/99-checkKernels
 rm $WORKDIR/buildLive/Files/chroot_local-hooks/13-setTvheadend
-rm $WORKDIR/buildLive/Files/binary_local-includes/install/Hooks/setup_uxlaunch.sh
-rm $WORKDIR/buildLive/Files/chroot_local-hooks/20-uxlaunchConfig
+#rm $WORKDIR/buildLive/Files/binary_local-includes/install/Hooks/setup_uxlaunch.sh
+#rm $WORKDIR/buildLive/Files/chroot_local-hooks/20-uxlaunchConfig
 
 cd $THISDIR
 
@@ -85,7 +86,8 @@ mv xbmc-remote-php/ $WORKDIR/buildLive/Files/chroot_local-includes/var/www
 
 #start building
 cd $WORKDIR
-./build.sh
+#./build.sh
+./buildWithOptions.sh -N
 
 #copy binary files
 cd $THISDIR
