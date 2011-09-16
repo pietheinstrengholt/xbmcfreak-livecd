@@ -12,7 +12,7 @@ WORKDIR=xbmc-live/SDK
 
 #check if xbmc-live dir already exists
 if [ -d "xbmc-live" ]; then
-echo "xbmc-live dir already exists"
+echo "xbmc-live dir already exists, remove xbmc-live dir"
     rm -rf xbmc-live
 fi
 
@@ -37,15 +37,13 @@ echo "libid3tag0 mt-daapd" >> $WORKDIR/buildLive/Files/chroot_local-packageslist
 echo "python-software-properties" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "locate ethtool" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "nfs-common" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+#use latest fglrx (not from ppa)
 sed -i "s/fglrx/#fglrx/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+#xbmc-ppa-keyring is not present in unstable
 sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-#sed -i "s/uxlaunch//g" $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "libao-dev avahi-utils" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "upower acpi-support" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "libmad0" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
-
-#new build.sh script
-cp files/build.sh $WORKDIR/ -Rf
 
 #add additional files
 cp files/chroot_local-includes/* $WORKDIR/buildLive/Files/chroot_local-includes/ -Rf
@@ -58,30 +56,16 @@ cp files/chroot_local-packages $WORKDIR/buildLive/Files/ -Rf
 rm $WORKDIR/buildLive/Files/chroot_sources/xbmc* -rf
 cp files/chroot_sources/* $WORKDIR/buildLive/Files/chroot_sources/ -Rf
 
-#add hooks
-cp files/buildHook-*.sh $WORKDIR/ -Rf
-
-#temp fix build
-rm $WORKDIR/buildLive/Files/chroot_local-hooks/00-installCrystalHD
-rm $WORKDIR/buildLive/Files/chroot_local-hooks/99-checkKernels
-rm $WORKDIR/buildLive/Files/chroot_local-hooks/13-setTvheadend
-#rm $WORKDIR/buildLive/Files/binary_local-includes/install/Hooks/setup_uxlaunch.sh
-#rm $WORKDIR/buildLive/Files/chroot_local-hooks/20-uxlaunchConfig
-
 cd $THISDIR
 
 #check if xbmc-live dir already exists
 if [ -d "xbmc-remote-php" ]; then
-echo "xbmc-remote-php dir already exists"
+echo "xbmc-remote-php dir already exists, remove xbmc-remote-php dir"
     rm -rf xbmc-remote-php
 fi
 
 #clone xbmc-remote-php
 git clone git@github.com:xbmcfreak/xbmc-remote-php.git
-
-#copy xbmc-remote-php dir
-#mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/
-#mkdir $WORKDIR/buildLive/Files/chroot_local-includes/var/www/
 mv xbmc-remote-php/ $WORKDIR/buildLive/Files/chroot_local-includes/var/www
 
 #start building
