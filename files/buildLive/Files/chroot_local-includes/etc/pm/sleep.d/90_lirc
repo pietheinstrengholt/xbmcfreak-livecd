@@ -1,0 +1,20 @@
+# Script to disable lirc before suspend and restart after wake.
+ 
+case "${1}" in
+        suspend|hibernate)
+		if [ "$(pidof xbmc.bin)" ] ; then
+			wget -q -b -O /dev/null -o /dev/null "http://127.0.0.1:8080/xbmcCmds/xbmcHttp?command=ExecBuilt&Inparameter=LIRC.Stop"
+		fi
+                /etc/init.d/lirc stop
+                ;;
+        resume|thaw)
+ # If remote still does not work after suspend, uncomment the lines below. 
+ # Note you may need to change "lirc_mceusb". See output from 'sudo lsmod | grep lirc' for module name.
+                #rmmod lirc_mceusb
+                #modprobe lirc_mceusb
+                /etc/init.d/lirc start
+		if [ "$(pidof xbmc.bin)" ] ; then
+			wget -q -b -O /dev/null -o /dev/null "http://127.0.0.1:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&parameter=LIRC.Start"
+		fi
+                ;;
+esac

@@ -44,34 +44,16 @@ sed -i "s/xbmc-ppa-keyring/#xbmc-ppa-keyring/g" $WORKDIR/buildLive/Files/chroot_
 echo "libao-dev avahi-utils" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "upower acpi-support" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 echo "libmad0" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
+echo "nvidia-settings" >> $WORKDIR/buildLive/Files/chroot_local-packageslists/packages.list
 
 #add additional files
-cp files/chroot_local-includes/* $WORKDIR/buildLive/Files/chroot_local-includes/ -Rf
-cp files/binary_grub/* $WORKDIR/buildLive/Files/binary_grub/ -Rf
-cp files/finish-install.d/* $WORKDIR/buildDEBs/xbmclive-installhelpers/finish-install.d/ -Rf
-cp files/post-base-installer.d/* $WORKDIR/buildDEBs/xbmclive-installhelpers/post-base-installer.d/ -Rf
-cp files/chroot_local-packages $WORKDIR/buildLive/Files/ -Rf
-
-#add addtional sources
 rm $WORKDIR/buildLive/Files/chroot_sources/xbmc* -rf
-cp files/chroot_sources/* $WORKDIR/buildLive/Files/chroot_sources/ -Rf
-
-cd $THISDIR
-
-#check if xbmc-live dir already exists
-if [ -d "xbmc-remote-php" ]; then
-echo "xbmc-remote-php dir already exists, remove xbmc-remote-php dir"
-    rm -rf xbmc-remote-php
-fi
-
-#clone xbmc-remote-php
-git clone git@github.com:xbmcfreak/xbmc-remote-php.git
-mv xbmc-remote-php/ $WORKDIR/buildLive/Files/chroot_local-includes/var/www
+cp files/* $WORKDIR/ -Rf
 
 #start building
 cd $WORKDIR
 #./build.sh
-./buildWithOptions.sh -N
+./buildWithOptions.sh -N --x-swat
 
 #copy binary files
 cd $THISDIR
